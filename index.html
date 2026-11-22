@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f5f4ef">
+  <meta name="description" content="A little clarity for your day. Search current weather and a five-day forecast anywhere in the world.">
+  <title>Daylight — Weather, simply.</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="script.js" defer></script>
+</head>
+<body>
+  <div class="page">
+    <header><a class="brand" href="./" aria-label="Daylight home"><span class="brand-icon">☀</span> daylight<span class="brand-dot">.</span></a><span class="header-note">A little clarity for your day.</span><button id="language-button" class="language-button" type="button" aria-label="Switch language">🌐 English</button></header>
+    <main>
+      <div class="intro"><p class="eyebrow">YOUR DAILY OUTLOOK</p><h1>Good days start<br>with a little foresight.</h1><p>Wherever you’re headed, know what’s ahead.</p></div>
+      <section class="search-section" aria-label="Find your weather">
+        <form id="search-form" role="search"><label class="sr-only" for="city-input">Search city</label><span aria-hidden="true" class="search-icon">⌕</span><input id="city-input" type="search" placeholder="Search for a city…" required minlength="2" maxlength="120" autocomplete="off"><button class="search-button" type="submit">Search <span aria-hidden="true">↗</span></button></form>
+        <button id="location-button" class="location-button" type="button"><span aria-hidden="true">◎</span> Use my location</button>
+      </section>
+      <p id="status" class="status" role="status" aria-live="polite"></p>
+      <div id="results" class="results" aria-label="Matching cities" hidden></div>
+      <div id="weather" aria-busy="false">
+        <section class="current-card" aria-labelledby="city-name">
+          <div class="current-top"><div><p class="card-label">CURRENT WEATHER</p><h2 id="city-name">Your next destination</h2><p id="place-detail">Search a city to find your forecast</p></div><span class="live-label"><span></span> Right now</span></div>
+          <div class="current-main"><div><div class="temperature"><span id="temperature">—</span><span class="unit">°C</span></div><p id="condition">A fresh perspective, rain or shine.</p></div><div id="weather-icon" class="hero-icon" aria-hidden="true">☀️</div></div>
+          <div class="current-bottom"><div><span class="metric-label">HUMIDITY</span><strong id="humidity">— <small>%</small></strong></div><div><span class="metric-label">WIND SPEED</span><strong id="wind">— <small>km/h</small></strong></div><div><span class="metric-label">FEELS LIKE</span><strong id="feels-like">— <small>°C</small></strong></div></div>
+          <p id="updated" class="updated">Weather for wherever life takes you.</p>
+        </section>
+        <section class="forecast-section" aria-labelledby="forecast-title"><div class="section-heading"><h2 id="forecast-title">The next 5 days</h2><span>Your week, at a glance</span></div><div id="forecast" class="forecast-grid"><p class="forecast-empty">Find a city above to see what’s on the horizon.</p></div></section>
+      </div>
+      <div class="closing"><span aria-hidden="true">↗</span> A change in weather. A world of possibilities.</div>
+    </main>
+    <footer><span>Made for the everyday explorer.</span><span>Weather data by <a href="https://open-meteo.com/" target="_blank" rel="noopener noreferrer">Open-Meteo ↗</a></span></footer>
+  </div>
+</body>
+</html>
