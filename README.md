@@ -2,6 +2,38 @@
 
 A responsive weather website built with HTML5, CSS3, and vanilla JavaScript. No build step or API key required.
 
+## Deploy on Debian 13 with Docker
+
+Install Docker Engine with the Buildx and Docker Compose plugins on the server. [Docker's Debian installation guide](https://docs.docker.com/engine/install/debian/)
+
+From the project directory on the server, run:
+
+```sh
+docker compose up -d --build --wait
+docker compose ps
+curl -fsS http://127.0.0.1:80/ -o /dev/null
+```
+
+The container serves the static site with Nginx on a Debian 13 base image. It runs as `www-data` and needs no database, persistent volume, secrets, or API key. The browser contacts Open-Meteo directly for forecasts and city search.
+
+Compose publishes HTTP on `127.0.0.1:80` by default. For remote access with geolocation, configure an HTTPS reverse proxy on the host to forward to that address. To expose plain HTTP directly for LAN access, set `WEATHER_BIND_ADDRESS=0.0.0.0`. To change the host port or bind address persistently, add the values to a `.env` file next to `compose.yaml` before starting Compose. For example:
+
+```dotenv
+WEATHER_BIND_ADDRESS=0.0.0.0
+WEATHER_PORT=8000
+```
+
+To deploy an update, run `docker compose up -d --build --wait` again after updating the project files. Use `docker compose logs -f weather` to view logs and `docker compose down` to stop the deployment.
+
+If the build stalls while downloading Debian package indexes, cancel it with Ctrl+C and use `docker compose --progress=plain build` to see APT's full output. The Dockerfile sets a 20-second network inactivity timeout, two retries for APT requests, and a three-minute timeout for each APT command.
+
+To skip package downloads on the server, build on another machine with the same CPU architecture and export the image with `docker image save -o daylight-weather.tar daylight-weather:local`. On the server, copy over the archive and `compose.yaml`, then run:
+
+```sh
+docker image load -i daylight-weather.tar
+docker compose up -d --no-build --wait
+```
+
 ## Run locally
 
 From this folder, run:
